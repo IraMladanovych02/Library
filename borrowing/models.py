@@ -10,10 +10,16 @@ class Borrowing(models.Model):
     expected_return_date = models.DateField()
     actual_return_date = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
-    book_id = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="borrowing")
-    user_id = models.ForeignKey(get_user_model(),
-                                on_delete=models.CASCADE,
-                                related_name="borrowings")
+    book_id = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        related_name="borrowing"
+    )
+    user_id = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name="borrowings"
+    )
 
     def clean(self):
         if self.expected_return_date:
@@ -25,7 +31,7 @@ class Borrowing(models.Model):
             if (self.actual_return_date
                     and self.actual_return_date > self.expected_return_date):
                 raise ValidationError(
-                    "Actual return date should not be after the expected return date."
+                    "Expected return date must be after actual return date."
                 )
 
         if self.actual_return_date:

@@ -24,7 +24,8 @@ class JWTAuthenticationTest(TestCase):
     def get_user_token(self):
         response = self.client.post(
             self.token_url,
-            {"email": self.user_data["email"], "password": self.user_data["password"]},
+            {"email": self.user_data["email"],
+             "password": self.user_data["password"]},
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         return response.data["access"]
@@ -56,7 +57,8 @@ class JWTAuthenticationTest(TestCase):
     def test_user_can_login_and_get_token(self):
         response = self.client.post(
             self.token_url,
-            {"email": self.user_data["email"], "password": self.user_data["password"]},
+            {"email": self.user_data["email"],
+             "password": self.user_data["password"]},
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("access", response.data)
@@ -65,9 +67,13 @@ class JWTAuthenticationTest(TestCase):
     def test_user_can_refresh_token(self):
         tokens_data = self.client.post(
             self.token_url,
-            {"email": self.user_data["email"], "password": self.user_data["password"]},
+            {"email": self.user_data["email"],
+             "password": self.user_data["password"]},
         )
-        response = self.client.post(self.refresh_token_url, {"refresh": tokens_data.data["refresh"]})
+        response = self.client.post(
+            self.refresh_token_url,
+            {"refresh": tokens_data.data["refresh"]}
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("access", response.data)
 
@@ -79,7 +85,9 @@ class JWTAuthenticationTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_can_access_protected_endpoint(self):
-        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {self.get_user_token()}")
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f"Bearer {self.get_user_token()}"
+        )
         response = self.client.get(self.me_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["email"], self.user_data["email"])

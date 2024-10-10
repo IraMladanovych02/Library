@@ -57,20 +57,28 @@ class BorrowingTests(TestCase):
 
             data = {
                 "borrow_date": datetime.now().date(),
-                "expected_return_date": datetime.now().date() + timedelta(days=3),
+                "expected_return_date": datetime.now().date() + timedelta(
+                    days=3
+                ),
                 "book": self.book.pk,
             }
 
             response = self.client.post(self.url, data, format="json")
 
-            self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+            self.assertEqual(
+                response.status_code,
+                status.HTTP_405_METHOD_NOT_ALLOWED
+            )
             self.assertEqual(Borrowing.objects.count(), 0)
 
     def test_borrow_nonexistent_book(self):
         data = {"book": 999, "expected_return_date": "2023-11-01"}
         response = self.client.post(self.url, data, format="json")
 
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_405_METHOD_NOT_ALLOWED
+        )
         self.assertEqual(Borrowing.objects.count(), 0)
 
     def test_borrow_unavailable_book(self):
@@ -80,12 +88,19 @@ class BorrowingTests(TestCase):
         data = {"book": self.book.id, "expected_return_date": "2023-11-01"}
         response = self.client.post(self.url, data, format="json")
 
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_405_METHOD_NOT_ALLOWED
+        )
         self.assertEqual(Borrowing.objects.count(), 0)
 
     def test_list_borrowings_by_user(self):
         url = reverse("borrowing:borrowing-list")
-        response = self.client.get(url, {"user_id": self.user.id}, format="json")
+        response = self.client.get(
+            url,
+            {"user_id": self.user.id},
+            format="json"
+        )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
@@ -108,9 +123,12 @@ class BorrowingTests(TestCase):
         borrowing = sample_borrowing(user_id=self.user, book_id=self.book)
 
         url = reverse("borrowing:borrowing-list")
-        response = self.client.get(url, {"title": self.book.title}, format="json")
+        response = self.client.get(
+            url,
+            {"title": self.book.title},
+            format="json"
+        )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["id"], borrowing.id)
-
