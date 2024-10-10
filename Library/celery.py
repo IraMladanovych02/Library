@@ -4,9 +4,9 @@ from django.conf import settings
 
 from celery import Celery
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "library_config.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Library.settings")
 
-app = Celery("library_config")
+app = Celery("Library")
 
 app.config_from_object(settings, namespace="CELERY")
 
