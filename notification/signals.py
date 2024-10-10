@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from borrowing.models import Borrowing
-from .utils import send_telegram_message
+from notification.utils import send_telegram_message
 
 
 @receiver(post_save, sender=Borrowing)

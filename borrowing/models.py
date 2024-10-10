@@ -18,7 +18,7 @@ class Borrowing(models.Model):
     user_id = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        related_name="borrowings"
+        related_name="borrowing"
     )
 
     def clean(self):
