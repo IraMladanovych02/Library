@@ -5,7 +5,7 @@ from .utils import send_telegram_message
 
 
 @receiver(post_save, sender=Borrowing)
-def send_borrowing_create_notification(instance, created, **kwargs):
+def order_created(sender, instance, created, **kwargs):
     if created:
-        message = f"New borrowing created: {instance}"
+        message = f"New order created:\nBook: {instance.book_id}\nUser: {instance.user_id}"
         send_telegram_message(message)

@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_spectacular',
-    "django_celery_beat",
-    "django_celery_results",
+    # "django_celery_beat",
+    # "django_celery_results",
     'book',
     'user',
     'borrowing',
@@ -160,10 +160,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Europe/Kiev'
-CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
