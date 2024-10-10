@@ -4,3 +4,4 @@ venv
 **__pycache__
 .idea/misc.xml
 db.sqlite3
+.env
