@@ -3,3 +3,4 @@ venv
 .DB_Store
 **__pycache__
 .idea/misc.xml
+db.sqlite3
