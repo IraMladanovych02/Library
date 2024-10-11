@@ -1,8 +1,9 @@
-from celery import shared_task
 from datetime import datetime, timedelta
 
-from borrowing.models import Borrowing
+from celery import shared_task
+
 from notification.utils import send_telegram_message
+from borrowing.models import Borrowing
 
 
 @shared_task
