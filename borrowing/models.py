@@ -13,12 +13,12 @@ class Borrowing(models.Model):
     book_id = models.ForeignKey(
         Book,
         on_delete=models.CASCADE,
-        related_name="borrowing"
+        related_name="borrowings"
     )
     user_id = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        related_name="borrowing"
+        related_name="borrowings"
     )
 
     def clean(self):
